@@ -1,0 +1,7 @@
+{
+  "name": "moviesApp_Ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
