@@ -23,7 +23,7 @@
 
         <ion-card-header class="cardHeader">
           <ion-card-title class="cardTitle">{{m.title}}</ion-card-title>
-          <ion-card-subtitle class="cardSubtitle"> {{m.release_date | date:'MMM d, y'}} | 134 minutes
+          <ion-card-subtitle class="cardSubtitle"> {{m.release_date | date:'MMM d, y'}} | {{m.runtime}} minutes
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content class="cardOverview">
@@ -35,7 +35,7 @@
                 src="https://dummyimage.com/500x750/ffffff/000000.jpg&text=POSTER+NOT+AVAILABLE" class="poster" />
             </ion-col>
             <ion-col>
-              {{m.overview}}
+              <span class="overviewText">{{m.overview}}</span>
             </ion-col>
           </ion-row>
 
@@ -52,7 +52,7 @@
             <ion-col size="3">
               <ion-icon name="people" class="iconPeople"></ion-icon>
             </ion-col>
-            <ion-col size="6" class="iconBarIcon">
+            <ion-col size="6" class="iconBarIcon" size="6" (click)="addToWatchlist()">
               <ion-icon name="add-circle-outline" class="iconAdd"></ion-icon>
             </ion-col>
           </ion-row>
@@ -63,44 +63,66 @@
             <ion-col size="3">
               <span>{{m.vote_count}}</span>
             </ion-col>
-            <ion-col size="6">
+            <ion-col>
               Add to Watchlist
             </ion-col>
           </ion-row>
-
 
         </ion-card-content>
       </ion-card>
       <!-- MOVIE INFO -->
 
       <!-- RELATED MOVIES -->
-      <ion-card class="cardRelated">
-        <ion-card-header class="cardHeaderRelated">
-          <ion-card-title class="cardTitle2">
-            <span class="yellowBar">
-              <ion-icon name="chevron-forward"></ion-icon>
-            </span>More like this
-          </ion-card-title>
-        </ion-card-header>
+      <ion-card class="card">
+      <ion-card-header class="cardHeaderRelated"  >
+        <ion-card-title class="cardTitle2"><span class="yellowBar"><ion-icon name="chevron-forward"></ion-icon></span>More like this</ion-card-title>
+      </ion-card-header>
 
-        <ion-card-content *ngFor="let relatedMovie of listOfRelatedMovies | async">
+      <ion-row *ngFor="let movie of listOfRelatedMovies | async" style="padding: 10px; padding: 0px;">
 
-          <ion-row >
-            <ion-col size="4">
-              <img *ngIf="relatedMovie.poster_path !== null" src="https://image.tmdb.org/t/p/w500{{relatedMovie.poster_path}}"
-                class="poster" />
-              <img *ngIf="relatedMovie.poster_path === null"
-                src="https://dummyimage.com/500x750/ffffff/000000.jpg&text=POSTER+NOT+AVAILABLE" class="poster" />
-            </ion-col>
-            <ion-col>
-              {{relatedMovie.title}}
-            </ion-col>
-          </ion-row>
+        <ion-col class="relatedColumn">
 
-        
-        </ion-card-content>
-      </ion-card>
-      <!-- RELATED MOVIES -->
+          <ion-card [routerLink]="['/movie-details', movie.id]" class="relatedMovieCard" (click)="saveToLocalStorage(movie.id)">
+            <ion-card-content class="cardContent">
+              <ion-row class="cardRow">
+    
+                <!--POSTER-->
+                <ion-col size="5">
+                  <img *ngIf="movie.poster_path !== null" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}"
+                    class="poster" />
+                  <img *ngIf="movie.poster_path === null"
+                    src="https://dummyimage.com/500x750/ffffff/000000.jpg&text=POSTER+NOT+AVAILABLE" class="poster" />
+                </ion-col>
+                <!--POSTER-->
+    
+                <!--DETAILS-->
+                <ion-col class="cardDetails">
+                  <div class="cardDetailsDiv">
+                    <ion-card-title class="cardTitleRelated">{{movie.title}}</ion-card-title>
+                    
+                    <ion-row class="cardRankVotes">
+                      <ion-col class="ion-text-end">
+                        <span class="rankNumber">{{movie.vote_average}}</span>/10
+                        <!--{{movie.vote_count}} <ion-icon name="people" class="iconPeople"></ion-icon>-->
+                      </ion-col>
+                      <ion-col class="ion-text-end">
+                        <span>{{movie.vote_count}}</span> <ion-icon name="people" class="iconPeople"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                  </div>
+                </ion-col>
+                <!--DETAILS-->
+    
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+    
+        </ion-col>
+
+      </ion-row>
+    </ion-card>
+      
+    <!-- RELATED MOVIES -->
 
 
 

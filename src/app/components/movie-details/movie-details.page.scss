@@ -12,6 +12,10 @@ ion-toolbar {
     padding: 0px;
 }
 
+.overviewText {
+    font-size: 1.1em;
+}
+
 .card {
     margin: 0px 0px 10px 0px;
     border-radius: 0px;
@@ -19,11 +23,12 @@ ion-toolbar {
     background-color: var(--ion-color-mycolor-tint);
 }
 
+
+
 .cardHeader {
     padding: 5px;
 }
 
-.cardContent {}
 
 .cardRow {
     /*background-color: rgb(35, 35, 35);*/
@@ -84,19 +89,35 @@ ion-toolbar {
     font-size: 1.5em;
 }
 
-
-.cardRelated {
-    margin: 0px 0px 10px 0px;
-    border-radius: 0px;
-    color: white;
-   /* background-color: rgb(55, 95, 95);*/
-    background-color: var(--ion-color-mycolor-tint);
-
-    padding: 0px;
+.rankNumber{
+    font-size: 2em;
+    color: orange
 }
 
-.cardHeaderRelated{
+.relatedColumn {}
+
+.relatedMovieCard {
+    margin: 0px 0px 0px 0px;
+    border-radius: 0px;
+    color: white;
+    background-color: var(--ion-color-mycolor);
+}
+
+.cardContent{
+    margin: 0px;
+    padding: 0px;
+
+}
+
+.cardHeaderRelated {
     padding: 5px;
+}
+
+.cardTitleRelated{
+    font-weight: lighter;
+    font-size: 1em;
+    color: white;
+    margin-top: 10px;
 }
 
 .cardTitle2 {

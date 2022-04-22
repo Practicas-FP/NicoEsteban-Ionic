@@ -1,9 +1,67 @@
 <ion-header>
   <ion-toolbar color="mycolor">
-    <ion-title>home</ion-title>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
+  <ion-toolbar color="mycolor">
+    <ion-searchbar placeholder="Search a movie title..." animated (ionChange)="searchMovie($event)"></ion-searchbar>
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
 
+  <ion-row [hidden]="hideResultsFor">
+    <div class="resultsFor">
+      Results for: {{this.movieSearched}}
+    </div>
+  </ion-row>
+
+  <ion-row [hidden]="hideTitle">
+    <div class="recommended"></div>
+    Recommended for you:
+  </ion-row>
+
+
+  <ion-row *ngFor="let movie of listOfMovies | async">
+    <!-- *ngFor="let movie of listOfMovies | async}" -->
+    <ion-col class="column">
+      <ion-card [routerLink]="['/movie-details', movie.id]" class="card" (click)="saveToLocalStorage(movie.id)">
+        <ion-card-content class="cardContent">
+          <ion-row class="cardRow">
+
+            <!--POSTER-->
+            <ion-col size="4">
+              <img *ngIf="movie.poster_path !== null" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}"
+                class="poster" />
+              <img *ngIf="movie.poster_path === null"
+                src="https://dummyimage.com/500x750/ffffff/000000.jpg&text=POSTER+NOT+AVAILABLE" class="poster" />
+            </ion-col>
+            <!--POSTER-->
+
+            <!--DETAILS-->
+            <ion-col class="cardDetails">
+              <div class="cardDetailsDiv">
+                <ion-card-title class="cardTitle">{{movie.title}}</ion-card-title>
+                <div class="cardSubTitle">
+                  <ion-card-subtitle>Released: {{movie.release_date | date:'MMM d, y'}}</ion-card-subtitle>
+                  <ion-card-subtitle>Votes: {{movie.vote_count}}</ion-card-subtitle>
+
+                </div>
+                <ion-row class="cardRankVotes">
+                  <ion-col class="ion-text-end">
+                    <span class="rankNumber">{{movie.vote_average}}</span>/10
+                    <!--{{movie.vote_count}} <ion-icon name="people" class="iconPeople"></ion-icon>-->
+
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+            <!--DETAILS-->
+
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
 </ion-content>

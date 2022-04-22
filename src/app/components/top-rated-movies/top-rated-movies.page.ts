@@ -3,27 +3,25 @@ import { Observable } from 'rxjs';
 import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
-  selector: 'app-upcoming-movies',
-  templateUrl: './upcoming-movies.page.html',
-  styleUrls: ['./upcoming-movies.page.scss'],
+  selector: 'app-top-rated-movies',
+  templateUrl: './top-rated-movies.page.html',
+  styleUrls: ['./top-rated-movies.page.scss'],
 })
-export class UpcomingMoviesPage implements OnInit {
+export class TopRatedMoviesPage implements OnInit {
 
   listOfMovies!: Observable<any>;
 
   constructor(private movieSvc: ServiceService) { }
 
   ngOnInit() {
-    this.getUpcomingMovies(1);
+    this.getTopRatedMovies(1);
   }
 
-  getUpcomingMovies(page: number): void {
-    this.listOfMovies = this.movieSvc.getUpcomingMovies(page);
+  getTopRatedMovies(page: number): void {
+    this.listOfMovies = this.movieSvc.getTopRatedMovies(page);
   }
-
 
   saveToLocalStorage(movieId: any){
     localStorage.setItem("recommendedMoviesId", movieId);
   }
 }
-

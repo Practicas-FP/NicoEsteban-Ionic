@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="mycolor">
-    <ion-title>Upcoming movies</ion-title>
+    <ion-title>Top rated movies</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
   <ion-row *ngFor="let movie of listOfMovies | async">
     <!-- *ngFor="let movie of listOfMovies | async}" -->
     <ion-col class="column">
-      <ion-card [routerLink]="['/movie-details', movie.id]" class="card" (click)="saveToLocalStorage(movie.id)">
+      <ion-card [routerLink]="['/movie-details', movie.id]" class="card"  (click)="saveToLocalStorage(movie.id)">
         <ion-card-content class="cardContent">
           <ion-row class="cardRow">
 

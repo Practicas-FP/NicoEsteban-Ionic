@@ -18,6 +18,22 @@ const routes: Routes = [
   {
     path: 'movie-details/:id',
     loadChildren: () => import('./components/movie-details/movie-details.module').then( m => m.MovieDetailsPageModule)
+  },
+  {
+    path: 'top-rated-movies',
+    loadChildren: () => import('./components/top-rated-movies/top-rated-movies.module').then( m => m.TopRatedMoviesPageModule)
+  },
+  {
+    path: 'popular-movies',
+    loadChildren: () => import('./components/popular-movies/popular-movies.module').then( m => m.PopularMoviesPageModule)
+  },
+  {
+    path: 'log-in',
+    loadChildren: () => import('./user-session/log-in/log-in.module').then( m => m.LogInPageModule)
+  },
+  {
+    path: 'sign-in',
+    loadChildren: () => import('./user-session/sign-in/sign-in.module').then( m => m.SignInPageModule)
   }
   
 ];
