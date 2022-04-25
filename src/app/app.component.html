@@ -1,22 +1,119 @@
 <ion-app>
+
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
 
-        <ion-list id="inbox-list">
-          <ion-list-header><span class="movieLogo">MOVIES</span><span class="appLogo">APP</span></ion-list-header>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index" style="background-color: black;">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
-              routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+        <!--Home-->
+        <ion-list>
+          <ion-list-header style="margin-bottom:30px">
+            <span class="movieLogo">MOVIES</span><span class="appLogo">APP</span>
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="['/']">
+              <ion-icon slot="start" name="home-outline"></ion-icon>
+              <ion-label>
+                Home
+              </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+
+        <!--Categories-->
+        <ion-list style="padding-top: 0px">
+          <ion-list-header>
+            <ion-label>Categories</ion-label>
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="['/upcoming-movies']">
+              <ion-icon slot="start" name="film-outline"></ion-icon>
+              <ion-label>
+                Upcoming movies
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/popular-movies']">
+              <ion-icon slot="start" name="star-half-outline"></ion-icon>
+              <ion-label>
+                Popular movies
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/top-rated-movies']">
+              <ion-icon slot="start" name="ribbon-outline"></ion-icon>
+              <ion-label>
+                Top rated movies
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+        <!--Profile-->
+        <ion-list style="padding-top: 0px">
+          <ion-list-header>
+            <ion-label>Profile</ion-label>
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="['/profile']">
+              <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+              <ion-label>
+                My profile
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/watchlist']">
+              <ion-icon slot="start" name="heart-outline"></ion-icon>
+              <ion-label>
+                Watchlist
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        
+
+        <!--Session-->
+        <ion-list style="padding-top: 40px">
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="['/log-in']" *ngIf="userIsLoggued === false">
+              <ion-icon slot="start" name="log-in-outline"></ion-icon>
+              <ion-label>
+                Log-In
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/sign-in']" *ngIf="userIsLoggued === false">
+              <ion-icon slot="start" name="create-outline"></ion-icon>
+              <ion-label>
+                Sign-In
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/']" (click)="onLogout()" *ngIf="userIsLoggued === true">
+              <ion-icon slot="start" name="log-out-outline"></ion-icon>
+              <ion-label>
+                Log-out
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
 
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
+
+<!--
+
+  <ion-list id="inbox-list">
+          <ion-list-header>
+            <span class="movieLogo">MOVIES</span><span class="appLogo">APP</span>
+          </ion-list-header>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index" style="background-color: black;">
+            
+            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
+              routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+         
+          </ion-menu-toggle>
+        </ion-list>
+-->

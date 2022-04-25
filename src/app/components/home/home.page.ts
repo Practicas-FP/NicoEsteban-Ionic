@@ -25,7 +25,6 @@ export class HomePage implements OnInit {
     if (this.recommendedMoviesId == null) {
       this.listOfMovies = this.movieSvc.getRelatedMovies(603);
     }
-    console.log("Mostrando:", this.recommendedMoviesId);
   }
 
 
