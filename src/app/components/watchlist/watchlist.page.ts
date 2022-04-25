@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IMovie } from 'src/app/interfaces/imovie';
+import { LoadingController } from '@ionic/angular';
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { addDoc, deleteField, doc, getFirestore, updateDoc } from "firebase/firestore";
 import { collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
+
 
 //FIRESTORE:
 // Initialize Firebase
@@ -27,9 +29,11 @@ export class WatchlistPage implements OnInit {
   movieDeleted: boolean = false;
   movieDeletedTitle: string = "";
 
-  constructor() { }
+  constructor(public loadingController: LoadingController) { }
 
   ngOnInit(): void {
+    this.presentLoading();
+
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -41,6 +45,15 @@ export class WatchlistPage implements OnInit {
     })
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Loading movies...',
+      duration: 500
+    });
+   return await loading.present();
+    //const { role, data } = await loading.onDidDismiss();
+   }
   async getUsersWatchlist() {
     //Obtaining user's whatchlist form Firestore:
     const q = query(collection(db, "watchlist"), where("user_uid", "==", this.userUID));

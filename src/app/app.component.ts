@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 
 import { environment } from 'src/environments/environment';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit {
   userIsLoggued!: boolean;
   userUID: string = "";
 
-  constructor() { }
+  constructor(public loadingController: LoadingController) { }
 
   ngOnInit(): void {
     const auth = getAuth();
@@ -44,11 +45,21 @@ export class AppComponent implements OnInit {
     })
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Logging out...',
+      duration: 500
+    });
+   return await loading.present();
+    //const { role, data } = await loading.onDidDismiss();
+   }
 
   onLogout() {
     const auth = getAuth();
     signOut(auth).then(() => {
       this.userIsLoggued = false;
     });
+    this.presentLoading();
   }
 }

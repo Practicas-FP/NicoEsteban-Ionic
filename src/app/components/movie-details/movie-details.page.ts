@@ -6,6 +6,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 import { IMovie } from 'src/app/interfaces/imovie';
 
@@ -50,10 +51,12 @@ export class MovieDetailsPage implements OnInit {
     private router: Router,
     private movieSvc: ServiceService,
     public toastController: ToastController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
     //Id of the movie:
     this.movieId = this.activatedRoute.snapshot.paramMap.get("id");
     //Movie data from Service
@@ -61,7 +64,7 @@ export class MovieDetailsPage implements OnInit {
     //Related movies from Service
     this.getRelatedMovies();
     this.getMovieData();
-
+   
     // Checking if user is loggued in:
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -72,7 +75,20 @@ export class MovieDetailsPage implements OnInit {
         this.userIsLoggued = false;
       }
     });
+
+
   }  //--OnInit
+
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Loading movie details...',
+      duration: 500
+    });
+   return await loading.present();
+    //const { role, data } = await loading.onDidDismiss();
+   }
 
   getRelatedMovies() {
     this.listOfRelatedMovies = this.movieSvc.getRelatedMovies(this.movieId);
@@ -109,7 +125,7 @@ export class MovieDetailsPage implements OnInit {
         });
 
         this.inWatchlist = true;
-        
+    
         //Toast
         const toast = await this.toastController.create({
           message: "Added to your Watchlist",

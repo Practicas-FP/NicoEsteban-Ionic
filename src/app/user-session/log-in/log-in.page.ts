@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 import { FormGroup, FormControl } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
@@ -25,13 +26,16 @@ export class LogInPage implements OnInit {
   public userIsLogged: boolean = false;
   public error_message: string = "";
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
 
   onLogin() {
-    //this.error = false;
+    this.presentLoading();
+
 
     const user_email = this.loginForm.controls["user_email"].value;
     const user_password = this.loginForm.controls["user_password"].value;
@@ -90,10 +94,14 @@ export class LogInPage implements OnInit {
   }
   //!OnLogin
 
-  onLogout() {
-    const auth = getAuth();
-    signOut(auth).then(() => {
-      //this.userIsLoggued = false;
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Logging in...',
+      duration: 500
     });
-  }
+   return await loading.present();
+    //const { role, data } = await loading.onDidDismiss();
+   }
+
 }
