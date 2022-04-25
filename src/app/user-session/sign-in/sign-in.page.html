@@ -6,37 +6,48 @@
 
 <ion-content>
 
+    <div align="center" style="margin-top: 20px;">
 
-    <div style="max-width:500px" class="p-3">
-        <form>
-            <fieldset>
-                <legend>CREA TU CUENTA EN MOVIES<span class="redLogo">APP</span></legend>
-
-                <div class="form-group">
-                    <label for="exampleInputEmail1" class="form-label mt-4">Correo electrónico</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="ejemplo@mail.com">
+        <div style="max-width:500px" class="p-3">
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                <fieldset>
+                    <legend>CREA TU CUENTA EN MOVIES<span class="redLogo">APP</span></legend>
+    
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="form-label mt-4">Correo electrónico</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="ejemplo@mail.com" formControlName="user_email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" class="form-label mt-4">Contraseña</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="Al menos 6 caracteres" formControlName="user_password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword2" class="form-label mt-4">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="exampleInputPassword2"
+                            placeholder="Confirma tu contraseña" formControlName="user_password_confirmation">
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-success" style="margin-top: 25px">Crear cuenta</button>
+    
+                <div *ngIf="success === true" class="alert alert-dismissible alert-success" style="margin-top: 15px">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>{{success_message}}</strong>
+                  </div>
+    
+                <div *ngIf="error === true" class="alert alert-dismissible alert-danger" style="margin-top: 15px">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong>{{error_message}}</strong>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1" class="form-label mt-4">Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1"
-                        placeholder="Al menos 6 caracteres">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword2" class="form-label mt-4">Confirmar contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword2"
-                        placeholder="Confirma tu contraseña">
-                </div>
-            </fieldset>
-            <button type="submit" class="btn btn-success" style="margin-top: 25px" (click="")>Crear cuenta</button>
-
-            
-        </form>
+    
+                
+            </form>
+        </div>
     </div>
-
-
-
-
+    
+    
+    
 
 
 
