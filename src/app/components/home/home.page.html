@@ -1,26 +1,29 @@
 <ion-header>
-  <ion-toolbar color="mycolor">
+  <ion-toolbar color="mycolor" class="pageTitle">
     <ion-title>Home</ion-title>
   </ion-toolbar>
   <ion-toolbar color="mycolor">
-    <ion-searchbar placeholder="Search a movie title..." animated (ionChange)="searchMovie($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Search a movie title..." animated (ionChange)="searchMovie($event)" class="searchBar"></ion-searchbar>
   </ion-toolbar>
 
 </ion-header>
 
-<ion-content>
+<ion-content class="ionContent">
 
-  <ion-row [hidden]="hideResultsFor">
-    <div class="resultsFor">
-      Results for: {{this.movieSearched}}
-    </div>
-  </ion-row>
-
-  <ion-row [hidden]="hideTitle">
-    <div class="recommended"></div>
-    Recommended for you:
-  </ion-row>
-
+  <div class="homeSubtitle">
+    <ion-row [hidden]="hideResultsFor" class="resultsFor">
+      <div>
+        Results for: "{{this.movieSearched}}"
+      </div>
+    </ion-row>
+  
+    <ion-row [hidden]="hideTitle" class="recommended">
+      <div>
+        Recommended for you:
+      </div>
+    </ion-row>
+  </div>
+  
 
   <ion-row *ngFor="let movie of listOfMovies | async">
     <!-- *ngFor="let movie of listOfMovies | async}" -->
