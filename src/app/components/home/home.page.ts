@@ -28,7 +28,6 @@ export class HomePage implements OnInit {
   }
 
 
-
   searchMovie(event) {
     const input = event.target.value;
 
@@ -44,10 +43,6 @@ export class HomePage implements OnInit {
       this.hideResultsFor = true;
       this.hideTitle = false;
     }
-
-
-
-
   }
 
   saveToLocalStorage(movieId: any) {

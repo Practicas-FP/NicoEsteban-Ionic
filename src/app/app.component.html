@@ -47,7 +47,7 @@
         </ion-list>
 
         <!--Profile-->
-        <ion-list style="padding-top: 0px">
+        <ion-list style="padding-top: 0px" *ngIf="userIsLoggued === true">
           <ion-list-header>
             <ion-label>Profile</ion-label>
           </ion-list-header>
@@ -98,22 +98,3 @@
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
-
-<!--
-
-  <ion-list id="inbox-list">
-          <ion-list-header>
-            <span class="movieLogo">MOVIES</span><span class="appLogo">APP</span>
-          </ion-list-header>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index" style="background-color: black;">
-            
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
-              routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-         
-          </ion-menu-toggle>
-        </ion-list>
--->

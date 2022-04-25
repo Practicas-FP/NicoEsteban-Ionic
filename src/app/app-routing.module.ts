@@ -34,6 +34,14 @@ const routes: Routes = [
   {
     path: 'sign-in',
     loadChildren: () => import('./user-session/sign-in/sign-in.module').then( m => m.SignInPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./components/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'watchlist',
+    loadChildren: () => import('./components/watchlist/watchlist.module').then( m => m.WatchlistPageModule)
   }
   
 ];

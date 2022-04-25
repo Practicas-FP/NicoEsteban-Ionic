@@ -1,53 +1,101 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ServiceService } from 'src/app/services/service.service';
 import { Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
+import { IMovie } from 'src/app/interfaces/imovie';
+
+import { environment } from 'src/environments/environment';
+import { initializeApp } from "firebase/app";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+//FIRESTORE:
+// Initialize Firebase
+const app = initializeApp(environment.firebaseConfig);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
 })
+
 export class MovieDetailsPage implements OnInit {
 
   movieId: any;
-  movie: Observable<any>;
+  movie: Observable<IMovie>; //any
   listOfRelatedMovies!: Observable<any>;
 
   userUID: string = "";
   userIsLoggued!: boolean;
 
+  inWatchlist: boolean = false;
+
+  //Movie info from DB:
+  _title!: string;
+  _poster_path !: string;
+  _release_date!: string;
+  _vote_average!: string;
+  _vote_count!: string;
+
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private movieSvc: ServiceService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
     //Id of the movie:
     this.movieId = this.activatedRoute.snapshot.paramMap.get("id");
-    
     //Movie data from Service
     this.movie = this.movieSvc.getMovieDetails(this.movieId);
-
-    //Related movies frmo Service
+    //Related movies from Service
     this.getRelatedMovies();
+    this.getMovieData();
 
-  }
+    // Checking if user is loggued in:
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.userIsLoggued = true;
+        this.userUID = user.uid;
+      } else {
+        this.userIsLoggued = false;
+      }
+    });
+  }  //--OnInit
 
   getRelatedMovies() {
     this.listOfRelatedMovies = this.movieSvc.getRelatedMovies(this.movieId);
   }
 
-  async addToWatchlist() {
+  getMovieData() {
+    const url = `https://api.themoviedb.org/3/movie/${this.movieId}?api_key=572f6e73385919e6eb3a365a3e144cce&language=en-EN`;
 
-    
-    
-    /*if (this.userIsLoggued == true) {
+    this.http.get<IMovie>(url)
+      .subscribe((response) => {
+        this._title = response.title;
+        this._poster_path = response.poster_path;
+        this._release_date = response.release_date;
+        this._vote_average = response.vote_average;
+        this._vote_count = response.vote_count;
+        console.log("[getMovieData] -> datos de la peli obtenidos");
+      }, err => {
+        console.log("[getMovieData] -> Error al obtener los datos de la peli:" + err);
+      })
+  }
+
+  async addToWatchlist() {
+    if (this.userIsLoggued == true) {
       //Saving in Firestore
       try {
         await setDoc(doc(db, "watchlist", this.userUID + this.movieId), {
@@ -60,28 +108,55 @@ export class MovieDetailsPage implements OnInit {
           movie_vote_count: this._vote_count,
         });
 
+        this.inWatchlist = true;
+        
+        //Toast
+        const toast = await this.toastController.create({
+          message: "Added to your Watchlist",
+          duration: 2000,
+          translucent: true,
+          animated: true,
+          position: "bottom"
+        });
+        toast.present();
+
       } catch (e) {
         console.error("[addToWatchlist] -> Error adding document: ", e);
       }
-      this.showAddButton = false;
-      this.showAddedButton = true;
-      this.showSuccessMessaje = true;
+      //this.showAddButton = false;
+      //this.showAddedButton = true;
+      //this.showSuccessMessaje = true;
     }
+
     if (this.userIsLoggued == false) {
-      this.showErrorMessaje = true;
-    }*/
 
-    //Toast
-    const toast = await this.toastController.create({
-      message: "Added to your Watchlist",
-      duration: 1000,
-      position: "bottom"
-    });
+      //Alert
+      const alert = await this.alertController.create({
+        header: "Watchlist",
+        message: "Log-in or Sign-in to add this movie to your Watchlist",
+        buttons: [
+          {
+            text: "Log-In",
+            handler: () => {
+              this.router.navigate(["/log-in"]);
+            }
+          },
+          {
+            text: "Sign-In",
+            handler: () => {
+              this.router.navigate(["/sign-in"]);
+            }
+          }
+        ]
+      });
+      await alert.present()
+      let result = await alert.onDidDismiss();
+    }
 
-    toast.present();
+
   }
 
-  saveToLocalStorage(movieId: any){
+  saveToLocalStorage(movieId: any) {
     localStorage.setItem("recommendedMoviesId", movieId);
   }
 

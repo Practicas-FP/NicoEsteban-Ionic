@@ -52,8 +52,11 @@
             <ion-col size="3">
               <ion-icon name="people" class="iconPeople"></ion-icon>
             </ion-col>
-            <ion-col size="6" class="iconBarIcon" size="6" (click)="addToWatchlist()">
+            <ion-col size="6" class="iconBarIcon" size="6" (click)="addToWatchlist()" *ngIf="!inWatchlist">
               <ion-icon name="add-circle-outline" class="iconAdd"></ion-icon>
+            </ion-col>
+            <ion-col size="6" class="iconBarIcon" size="6" *ngIf="inWatchlist">
+              <ion-icon name="heart-circle-outline" class="iconAdd"></ion-icon>
             </ion-col>
           </ion-row>
           <ion-row class="subIconsBar">
@@ -63,8 +66,11 @@
             <ion-col size="3">
               <span>{{m.vote_count}}</span>
             </ion-col>
-            <ion-col>
+            <ion-col *ngIf="!inWatchlist">
               Add to Watchlist
+            </ion-col>
+            <ion-col *ngIf="inWatchlist">
+              In my Watchlist
             </ion-col>
           </ion-row>
 
