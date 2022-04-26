@@ -44,10 +44,12 @@ ion-chip {
             margin: 0 auto;
 
             img {
+                min-width: 160px;
                 display: block;
                 border-radius: 50%;
                 position: absolute;
-                bottom: calc(-1*(80px + 4px)); // -42px;
+                /*bottom: calc(-1*(80px + 4px)); // -42px;*/
+                bottom: calc(-1*(120px + 4px)); // -42px;
                 border: 8px solid orange;
                 background-color: #fff;
             }
@@ -56,6 +58,7 @@ ion-chip {
 }
 
 .card-body {
+    margin-top: 20px;
     background-color: rgb(35, 35, 35);
     padding: 30px;
     height: calc(100vh - (200px + 56px));
@@ -73,7 +76,6 @@ ion-chip {
         .country {
             font-size: 90%;
             color: #949ea6;
-            text-transform: uppercase;
             margin: 0 auto;
         }
 

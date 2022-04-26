@@ -21,6 +21,7 @@ export interface IMovie {
     //original_title: any;
     overview: any;
     poster_path: any;
+    backdrop_path: any;
     release_date: any;
     vote_average: any;
     vote_count: any;

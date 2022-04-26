@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { LoadingController } from '@ionic/angular';
 
 import { FormGroup, FormControl } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged,signOut } from "firebase/auth";
 
-import { environment } from 'src/environments/environment';
+//Adding Google login
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 
 const app = initializeApp(environment.firebaseConfig)
+
+//Adding Google login
+const provider = new GoogleAuthProvider();
+
 
 @Component({
   selector: 'app-log-in',
@@ -90,9 +97,31 @@ export class LogInPage implements OnInit {
           }
         });
     }
-
   }
   //!OnLogin
+
+  onLoginGoogle(){
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // Redirect to Home
+        this.router.navigate(["/"]);
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
 
   async presentLoading() {
     const loading = await this.loadingController.create({

@@ -25,12 +25,16 @@
                 </div>
             </fieldset>
             <button type="submit" class="btn btn-success" style="margin-top: 25px">Login</button>
+          
+
 
             <div *ngIf="error === true" class="alert alert-dismissible alert-danger" style="margin-top: 15px">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <strong>{{error_message}}</strong>
             </div>
         </form>
+
+        <button class="btn btn-success" style="margin-top: 25px" (click)="onLoginGoogle()">Google</button>
     </div>
 </div>
 

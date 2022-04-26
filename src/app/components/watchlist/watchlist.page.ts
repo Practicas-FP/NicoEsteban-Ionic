@@ -13,6 +13,7 @@ import { collection, deleteDoc, getDocs, query, where } from "firebase/firestore
 //FIRESTORE:
 // Initialize Firebase
 const app = initializeApp(environment.firebaseConfig);
+
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
@@ -81,6 +82,7 @@ export class WatchlistPage implements OnInit {
         id: doc.get("movie_id"),
         title: doc.get("movie_title"),
         poster_path: doc.get("movie_poster_path"),
+        backdrop_path: doc.get("movie_poster_path"),
         release_date: doc.get("movie_release_date"),
         vote_average: doc.get("movie_vote_average"),
         vote_count: doc.get("movie_vote_count"),

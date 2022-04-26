@@ -22,17 +22,19 @@
 
 <ion-content fullscreen="true" slot="fixed">
   <div class="card">
+
     <div class="header">
       <div class="avatar">
-        <img src="../../../assets/player104.png" alt="">
+        <img src="{{this.userPhotoURL}}" alt="">
       </div>
     </div>
+
     <div class="card-body">
       <div class="user-meta ion-text-center">
-        <h3 class="playername">Nico_Esteban07</h3>
-        <h5 class="country">New member</h5>
+        <h3 class="playername">{{this.userDisplayName}}</h3>
+        <h5 class="country">{{this.userEmail}}</h5>
         <h6 class="ranking">Member since: <ion-chip>
-            <ion-label>March 17, 2022</ion-label>
+            <ion-label>{{this.userCreatedAt | date:'MMM d, y'}}</ion-label>
           </ion-chip>
         </h6>
 
