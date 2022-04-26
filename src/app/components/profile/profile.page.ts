@@ -36,5 +36,8 @@ export class ProfilePage implements OnInit {
     })
   }
 
+  edit(){
+    console.log("EDIT");
+  }
 
 }

@@ -25,22 +25,25 @@
 
     <div class="header">
       <div class="avatar">
-        <img src="{{this.userPhotoURL}}" alt="">
+        <img *ngIf="this.userPhotoURL !== null" src="{{this.userPhotoURL}}" alt="">
+        
+        <img *ngIf="this.userPhotoURL === null" src="../../../assets/avatar.png" alt="">
       </div>
     </div>
 
     <div class="card-body">
       <div class="user-meta ion-text-center">
         <h3 class="playername">{{this.userDisplayName}}</h3>
-        <h5 class="country">{{this.userEmail}}</h5>
+        <h3 class="playername" *ngIf="this.userDisplayName === null">{{this.userEmail}}</h3>
+        <h5 class="country" *ngIf="this.userDisplayName !== null">{{this.userEmail}}</h5>
         <h6 class="ranking">Member since: <ion-chip>
             <ion-label>{{this.userCreatedAt | date:'MMM d, y'}}</ion-label>
           </ion-chip>
         </h6>
-
       </div>
 
-      <ion-button shape="round" expand="block" color="warning">Edit <ion-icon name="create-outline"></ion-icon></ion-button>
+     
+      <ion-button shape="round" expand="block" color="warning" (click)="edit()">Edit <ion-icon name="create-outline"></ion-icon></ion-button>
      
 
     </div>
