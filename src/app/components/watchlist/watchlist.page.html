@@ -5,16 +5,22 @@
 </ion-header>
 
 <ion-content>
+  <!-- Default Refresher -->
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
 
   <ion-row *ngFor="let movie of watchlist">
     <!-- *ngFor="let movie of listOfMovies | async}" -->
     <ion-col class="column">
-      <ion-card [routerLink]="['/movie-details', movie.id]" class="card">
+      <ion-card class="card">
         <ion-card-content class="cardContent">
           <ion-row class="cardRow">
 
             <!--POSTER-->
-            <ion-col size="4">
+            <ion-col size="4" [routerLink]="['/movie-details', movie.id]">
               <img *ngIf="movie.poster_path !== null" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}"
                 class="poster" />
               <img *ngIf="movie.poster_path === null"
@@ -35,8 +41,10 @@
                   <ion-col class="ion-text-end">
                     <span class="rankNumber">{{movie.vote_average}}</span>/10
                     <!--{{movie.vote_count}} <ion-icon name="people" class="iconPeople"></ion-icon>-->
-
                   </ion-col>
+                </ion-row>
+                <ion-row>
+                  <button (click)="delete(movie.id)">Delete</button>
                 </ion-row>
               </div>
             </ion-col>

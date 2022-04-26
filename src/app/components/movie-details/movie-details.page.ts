@@ -84,7 +84,7 @@ export class MovieDetailsPage implements OnInit {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Loading movie details...',
-      duration: 500
+      duration: 800
     });
    return await loading.present();
     //const { role, data } = await loading.onDidDismiss();
@@ -104,7 +104,6 @@ export class MovieDetailsPage implements OnInit {
         this._release_date = response.release_date;
         this._vote_average = response.vote_average;
         this._vote_count = response.vote_count;
-        console.log("[getMovieData] -> datos de la peli obtenidos");
       }, err => {
         console.log("[getMovieData] -> Error al obtener los datos de la peli:" + err);
       })
@@ -132,7 +131,8 @@ export class MovieDetailsPage implements OnInit {
           duration: 2000,
           translucent: true,
           animated: true,
-          position: "bottom"
+          position: "bottom",
+          cssClass: 'toast-custom-class'
         });
         toast.present();
 

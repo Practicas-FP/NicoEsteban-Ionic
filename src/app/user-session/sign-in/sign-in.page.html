@@ -11,25 +11,25 @@
         <div style="max-width:500px" class="p-3">
             <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
                 <fieldset>
-                    <legend>CREA TU CUENTA EN MOVIES<span class="redLogo">APP</span></legend>
+                    <legend>Create your account</legend>
     
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label mt-4">Correo electrónico</label>
+                        <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="ejemplo@mail.com" formControlName="user_email">
+                            placeholder="example@mail.com" formControlName="user_email">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1" class="form-label mt-4">Contraseña</label>
+                        <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Al menos 6 caracteres" formControlName="user_password">
+                            placeholder="At least 6 characters" formControlName="user_password">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword2" class="form-label mt-4">Confirmar contraseña</label>
+                        <label for="exampleInputPassword2" class="form-label mt-4">Confirm Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword2"
-                            placeholder="Confirma tu contraseña" formControlName="user_password_confirmation">
+                            placeholder="Confirm your password" formControlName="user_password_confirmation">
                     </div>
                 </fieldset>
-                <button type="submit" class="btn btn-success" style="margin-top: 25px">Crear cuenta</button>
+                <button type="submit" class="btn btn-success" style="margin-top: 25px">Create acount</button>
     
                 <div *ngIf="success === true" class="alert alert-dismissible alert-success" style="margin-top: 15px">
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>

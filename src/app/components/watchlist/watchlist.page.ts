@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IMovie } from 'src/app/interfaces/imovie';
 import { LoadingController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
@@ -29,7 +30,9 @@ export class WatchlistPage implements OnInit {
   movieDeleted: boolean = false;
   movieDeletedTitle: string = "";
 
-  constructor(public loadingController: LoadingController) { }
+  constructor(
+    public toastController: ToastController,
+    public loadingController: LoadingController) { }
 
   ngOnInit(): void {
     this.presentLoading();
@@ -51,9 +54,23 @@ export class WatchlistPage implements OnInit {
       message: 'Loading movies...',
       duration: 500
     });
-   return await loading.present();
+    return await loading.present();
     //const { role, data } = await loading.onDidDismiss();
-   }
+  }
+
+
+  doRefresh(event) {
+    //Removing current movies in Watchlist Array
+    for (let i = this.watchlist.length; i > 0; i--) {
+      this.watchlist.pop();
+     }
+    this.getUsersWatchlist();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
+
   async getUsersWatchlist() {
     //Obtaining user's whatchlist form Firestore:
     const q = query(collection(db, "watchlist"), where("user_uid", "==", this.userUID));
@@ -76,13 +93,25 @@ export class WatchlistPage implements OnInit {
     });
   }
 
-  async delete(movieId: string) {
+  async delete(movieId: any) {
     try {
       await deleteDoc(doc(db, "watchlist", this.userUID + movieId));
       this.movieDeleted = true;
+
+      //Toast
+      const toast = await this.toastController.create({
+        message: "Removed from your Watchlist",
+        duration: 1500,
+        translucent: true,
+        animated: true,
+        position: "bottom",
+        cssClass: 'toast-custom-class'
+      });
+      toast.present();
+     
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 1500);
     } catch (e) {
       console.error("[delete()] -> Error al borrar película: ", e);
     }
