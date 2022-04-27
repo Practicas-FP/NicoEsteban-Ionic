@@ -5,21 +5,22 @@
 </ion-header>
 
 <ion-content fullscreen="true" slot="fixed">
+
+  <!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
   <div class="card">
 
     <div class="header">
       <div class="avatar">
+        <img *ngIf="!this.hasPhoto" src="../../../assets/avatar.png" alt="">
+        <img *ngIf="this.hasPhoto" src="{{this.userPhotoFromDB_PROFILE}}" alt="">
 
-        <img src="{{this.userPhotoURL}}" alt="">
-        <img *ngIf="this.userPhotoURL === null" src="../../../assets/avatar.png" alt="">
-
-        <!--       
-          <div *ngFor="let photo of photoService.photos; index as position">
-          <div *ngIf="photo !== null">
-            <img [src]="photo.webviewPath" alt="">
-          </div>
-        </div>
-      -->
+        <img *ngIf="this.isGoogleUser" src="{{this.userPhotoURL}}" alt="">
+        <img *ngIf="this.isGoogleUser && hasPhoto" src="{{this.userPhotoFromDB_PROFILE}}" alt="">
       </div>
     </div>
 
@@ -29,19 +30,14 @@
         <h3 class="playername">{{this.userDisplayName}}</h3>
         <h3 class="playername" *ngIf="this.userDisplayName === null">{{this.userEmail}}</h3>
         <h5 class="country" *ngIf="this.userDisplayName !== null">{{this.userEmail}}</h5>
-        <h6 class="ranking">Member since: <ion-chip>
-            <ion-label>{{this.userCreatedAt | date:'MMM d, y'}}</ion-label>
-          </ion-chip>
-        </h6>
+        <h6 class="ranking">Joined: {{this.userCreatedAt | date:'MMM d, y'}}</h6>
       </div>
 
       <div class="editButton">
-        <ion-button  shape="round" expand="block" color="warning" (click)="edit()">Edit <ion-icon name="create-outline">
-        </ion-icon>
-      </ion-button>
+        <ion-button shape="round" expand="block" color="warning" (click)="changePhoto()">Change photo<ion-icon name="camera-outline">
+          </ion-icon>
+        </ion-button>
       </div>
-     
-
 
     </div>
   </div>

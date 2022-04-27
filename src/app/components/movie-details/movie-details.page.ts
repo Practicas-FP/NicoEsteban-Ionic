@@ -34,7 +34,7 @@ export class MovieDetailsPage implements OnInit {
   listOfRelatedMovies!: Observable<any>;
 
   userUID: string = "";
-  userIsLoggued!: boolean;
+  userIsLoggued: boolean = false;
 
   inWatchlist: boolean = false;
 
@@ -57,6 +57,7 @@ export class MovieDetailsPage implements OnInit {
 
   ngOnInit() {
     this.presentLoading();
+
     //Id of the movie:
     this.movieId = this.activatedRoute.snapshot.paramMap.get("id");
     //Movie data from Service
@@ -71,10 +72,10 @@ export class MovieDetailsPage implements OnInit {
       if (user) {
         this.userIsLoggued = true;
         this.userUID = user.uid;
-      } else {
-        this.userIsLoggued = false;
+        console.log("USUARIO-movieDetails: " + this.userUID);
       }
     });
+ 
 
 
   }  //--OnInit
@@ -139,9 +140,6 @@ export class MovieDetailsPage implements OnInit {
       } catch (e) {
         console.error("[addToWatchlist] -> Error adding document: ", e);
       }
-      //this.showAddButton = false;
-      //this.showAddedButton = true;
-      //this.showSuccessMessaje = true;
     }
 
     if (this.userIsLoggued == false) {
@@ -168,8 +166,6 @@ export class MovieDetailsPage implements OnInit {
       await alert.present()
       let result = await alert.onDidDismiss();
     }
-
-
   }
 
   saveToLocalStorage(movieId: any) {

@@ -1,19 +1,38 @@
 import { Injectable } from '@angular/core';
 
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Storage } from '@capacitor/storage';
+
+import { environment } from 'src/environments/environment';
+import { initializeApp } from "firebase/app";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+//FIRESTORE:
+// Initialize Firebase
+const app = initializeApp(environment.firebaseConfig);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class PhotoService {
 
-  public photos: UserPhoto[] = [];
-  private PHOTO_STORAGE: string = 'photos';
+  userUID: string = "";
+  public photoFromDB_SERVICE: string = "no_photo";
 
-  constructor() { }
-
+  constructor() {
+    // Checking if user is loggued in:
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.userUID = user.uid;
+      }
+    });
+  }
 
   public async addNewToGallery() {
     // Take a photo
@@ -23,65 +42,38 @@ export class PhotoService {
       quality: 100 // highest quality (0 to 100)
     });
 
-    // Save the picture and add it to photo collection
     const savedImageFile = await this.savePicture(capturedPhoto);
-    this.photos.unshift(savedImageFile);
-
-
-    Storage.set({
-      key: this.PHOTO_STORAGE,
-      value: JSON.stringify(this.photos),
-    });
   }
-
-
 
   private async savePicture(photo: Photo) {
-    // Convert photo to base64 format, required by Filesystem API to save
+    // Convert photo to base64 format
     const base64Data = await this.readAsBase64(photo);
 
-    // Write the file to the data directory
-    const fileName = new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: fileName,
-      data: base64Data,
-      directory: Directory.Data
-    });
-
-    // Use webPath to display the new image instead of base64 since it's
-    // already loaded into memory
-    return {
-      filepath: fileName,
-      webviewPath: photo.webPath
-    };
-  }
-
-  public async loadSaved() {
-    // Retrieve cached photo array data
-    const photoList = await Storage.get({ key: this.PHOTO_STORAGE });
-    this.photos = JSON.parse(photoList.value) || [];
-
-    // more to come...
-    // Display the photo by reading into base64 format
-    for (let photo of this.photos) {
-      // Read each saved photo's data from the Filesystem
-      const readFile = await Filesystem.readFile({
-        path: photo.filepath,
-        directory: Directory.Data,
+    //Saving in Firestore
+    try {
+      await setDoc(doc(db, "profile", this.userUID), {// + this.movieId
+        user_uid: this.userUID,
+        photo_base64: base64Data,
       });
-
-      // Web platform only: Load the photo as base64 data
-      photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
+    } catch (e) {
+      console.error("[savePicture] -> Error adding document: ", e);
     }
   }
 
+  async getPhotoFromDB() {
+    //Obtaining user's whatchlist form Firestore:
+    const q = query(collection(db, "profile"), where("user_uid", "==", this.userUID));
+    const querySnapshot = await getDocs(q);
 
+    querySnapshot.forEach((doc) => {
+      this.photoFromDB_SERVICE = doc.get("photo_base64");
+    });
+  }
 
   private async readAsBase64(photo: Photo) {
     // Fetch the photo, read as a blob, then convert to base64 format
     const response = await fetch(photo.webPath!);
     const blob = await response.blob();
-
     return await this.convertBlobToBase64(blob) as string;
   }
 
@@ -93,8 +85,6 @@ export class PhotoService {
     };
     reader.readAsDataURL(blob);
   });
-
-
 }
 //!PhotoService
 
@@ -104,4 +94,3 @@ export interface UserPhoto {
   filepath: string;
   webviewPath: string;
 }
-

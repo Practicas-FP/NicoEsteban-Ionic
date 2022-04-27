@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PhotoService } from 'src/app/services/photo.service';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-
+import { LoadingController } from '@ionic/angular';
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
@@ -25,10 +25,17 @@ export class ProfilePage implements OnInit {
   userEmail: string = "";
   userCreatedAt: string = "";
 
-  constructor(public photoService: PhotoService) { }
+  isGoogleUser: boolean = false;
+  hasPhoto: boolean = false;
 
-  async ngOnInit() {
+  userPhotoFromDB_PROFILE: string;
 
+  constructor(
+    public photoService: PhotoService,
+    public loadingController: LoadingController
+  ) { }
+
+  ngOnInit() {
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -40,15 +47,30 @@ export class ProfilePage implements OnInit {
       } else {
         this.userUID = "";
       }
-    })
 
-    //Taking user photo from PhotoService
-    await this.photoService.loadSaved();
+      //Checking if is a Google user
+      if (this.userPhotoURL != null) {
+        this.isGoogleUser = true;
+      }
+
+      //Getting user photo from DB
+      this.photoService.getPhotoFromDB();
+      setTimeout(() => {
+        this.userPhotoFromDB_PROFILE = this.photoService.photoFromDB_SERVICE;
+        if (this.userPhotoFromDB_PROFILE != "no_photo") {
+          this.hasPhoto = true;
+        }
+      }, 1500);
+    })
+  }
+  //!OnInit
+
+  changePhoto() {
+    this.photoService.addNewToGallery();
   }
 
-  edit(){
-    this.photoService.addNewToGallery();
-
+  doRefresh(event) {
+    window.location.reload();
   }
 
 }
