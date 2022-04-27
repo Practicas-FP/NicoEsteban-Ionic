@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { PhotoService } from 'src/app/services/photo.service';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 const app = initializeApp(environment.firebaseConfig);
+
+
+// Call the element loader after the platform has been bootstrapped
+defineCustomElements(window);
 
 @Component({
   selector: 'app-profile',
@@ -18,9 +25,9 @@ export class ProfilePage implements OnInit {
   userEmail: string = "";
   userCreatedAt: string = "";
 
-  constructor() { }
+  constructor(public photoService: PhotoService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
@@ -34,10 +41,14 @@ export class ProfilePage implements OnInit {
         this.userUID = "";
       }
     })
+
+    //Taking user photo from PhotoService
+    await this.photoService.loadSaved();
   }
 
   edit(){
-    console.log("EDIT");
+    this.photoService.addNewToGallery();
+
   }
 
 }

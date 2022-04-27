@@ -64,7 +64,7 @@ export class MovieDetailsPage implements OnInit {
     //Related movies from Service
     this.getRelatedMovies();
     this.getMovieData();
-   
+
     // Checking if user is loggued in:
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -86,9 +86,9 @@ export class MovieDetailsPage implements OnInit {
       message: 'Loading movie details...',
       duration: 800
     });
-   return await loading.present();
+    return await loading.present();
     //const { role, data } = await loading.onDidDismiss();
-   }
+  }
 
   getRelatedMovies() {
     this.listOfRelatedMovies = this.movieSvc.getRelatedMovies(this.movieId);
@@ -124,7 +124,7 @@ export class MovieDetailsPage implements OnInit {
         });
 
         this.inWatchlist = true;
-    
+
         //Toast
         const toast = await this.toastController.create({
           message: "Added to your Watchlist",
