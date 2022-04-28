@@ -26,7 +26,7 @@ ion-toolbar {
 .resultsFor {
     background-color: var(--ion-color-mycolor-tint);
     color: #fff;
-    font-size: 1.2em;
+    font-size: 1.5em;
 
 }
 
@@ -73,6 +73,13 @@ ion-toolbar {
     margin-top: 10px;
 }
 
+.cardTitle2 {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: orange;
+    margin-top: 10px;
+    align-items: center;
+}
 
 .cardSubTitle {
     margin-top: 5px;
@@ -80,14 +87,18 @@ ion-toolbar {
 
 .cardRankVotes {
     align-items: baseline;
-    margin-top: 5px;
-    font-size: 1.2em;
-
+    margin-top: 0px;
+    font-size: 1.6em;
 }
 
 .rankNumber {
-    font-size: 2em;
-    color: orange
+    font-size: 2.5em;
+    color: orange;
+    font-weight: 500;
+}
+
+ion-chip {
+    height: 50px;
 }
 
 .iconStar {

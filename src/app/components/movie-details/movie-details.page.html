@@ -79,21 +79,22 @@
       <!-- MOVIE INFO -->
 
       <!-- RELATED MOVIES -->
+      
       <ion-card class="card">
       <ion-card-header class="cardHeaderRelated"  >
-        <ion-card-title class="cardTitle2"><span class="yellowBar"><ion-icon name="chevron-forward"></ion-icon></span>More like this</ion-card-title>
+        <ion-card-title class="cardTitle2"> 》More like this:</ion-card-title>
       </ion-card-header>
 
       <ion-row *ngFor="let movie of listOfRelatedMovies | async" style="padding: 10px; padding: 0px;">
 
         <ion-col class="relatedColumn">
 
-          <ion-card [routerLink]="['/movie-details', movie.id]" class="relatedMovieCard" (click)="saveToLocalStorage(movie.id)">
+          <ion-card [routerLink]="['/movie-details', movie.id]" class="card"  (click)="saveToLocalStorage(movie.id)">
             <ion-card-content class="cardContent">
               <ion-row class="cardRow">
     
                 <!--POSTER-->
-                <ion-col size="5">
+                <ion-col size="4">
                   <img *ngIf="movie.poster_path !== null" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}"
                     class="poster" />
                   <img *ngIf="movie.poster_path === null"
@@ -104,15 +105,17 @@
                 <!--DETAILS-->
                 <ion-col class="cardDetails">
                   <div class="cardDetailsDiv">
-                    <ion-card-title class="cardTitleRelated">{{movie.title}}</ion-card-title>
-                    
+                    <ion-card-title class="cardTitle" style="font-size: 1.2em;">{{movie.title}}</ion-card-title>
+                    <div class="cardSubTitle">
+                      <ion-card-subtitle>Released: {{movie.release_date | date:'MMM d, y'}}</ion-card-subtitle>
+                      <ion-card-subtitle>Ratings: {{movie.vote_count}}</ion-card-subtitle>
+    
+                    </div>
                     <ion-row class="cardRankVotes">
                       <ion-col class="ion-text-end">
-                        <span class="rankNumber">{{movie.vote_average}}</span>/10
-                        <!--{{movie.vote_count}} <ion-icon name="people" class="iconPeople"></ion-icon>-->
-                      </ion-col>
-                      <ion-col class="ion-text-end">
-                        <span>{{movie.vote_count}}</span> <ion-icon name="people" class="iconPeople"></ion-icon>
+                        <ion-chip>
+                          <ion-label color="warning"><span class="rankNumber">{{movie.vote_average}}</span>/10</ion-label>
+                        </ion-chip>
                       </ion-col>
                     </ion-row>
                   </div>

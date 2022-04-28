@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>log-in</ion-title>
+    <ion-title>Log In</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,8 +10,8 @@
 
     <div style="max-width:500px" class="p-3">
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-            <fieldset>
-                <legend>Login</legend>
+            <fieldset >
+                <!--<legend >Login</legend>-->
 
                 <div class="form-group">
                     <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
@@ -24,8 +24,10 @@
                         placeholder="Your password here" formControlName="user_password">
                 </div>
             </fieldset>
-            <button type="submit" class="btn btn-success" style="margin-top: 25px">Login</button>
-          
+            <ion-button type="submit" shape="round" expand="block" color="warning" style="margin-top: 25px">LOGIN</ion-button>
+
+            <ion-button shape="round" expand="block" style="color: white; margin-top: 25px" (click)="onLoginGoogle()">LOGIN WITH GOOGLE</ion-button>
+    
 
 
             <div *ngIf="error === true" class="alert alert-dismissible alert-danger" style="margin-top: 15px">
@@ -33,8 +35,7 @@
                 <strong>{{error_message}}</strong>
             </div>
         </form>
-
-        <button class="btn btn-success" style="margin-top: 25px" (click)="onLoginGoogle()">Google</button>
+        
     </div>
 </div>
 

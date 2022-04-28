@@ -52,7 +52,7 @@ export class WatchlistPage implements OnInit {
   async presentLoading() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Loading movies...',
+      message: 'Loading Watchlist...',
       duration: 500
     });
     return await loading.present();

@@ -4,6 +4,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { LoadingController } from '@ionic/angular';
 
 
+
 @Component({
   selector: 'app-upcoming-movies',
   templateUrl: './upcoming-movies.page.html',
@@ -16,7 +17,7 @@ export class UpcomingMoviesPage implements OnInit {
   constructor(
     private movieSvc: ServiceService,
     public loadingController: LoadingController
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.presentLoading();
@@ -29,17 +30,19 @@ export class UpcomingMoviesPage implements OnInit {
       message: 'Loading movies...',
       duration: 500
     });
-   return await loading.present();
+    return await loading.present();
     //const { role, data } = await loading.onDidDismiss();
-   }
+  }
 
   getUpcomingMovies(page: number): void {
     this.listOfMovies = this.movieSvc.getUpcomingMovies(page);
   }
 
-
-  saveToLocalStorage(movieId: any){
+  saveToLocalStorage(movieId: any) {
     localStorage.setItem("recommendedMoviesId", movieId);
   }
+
+
+
 }
 

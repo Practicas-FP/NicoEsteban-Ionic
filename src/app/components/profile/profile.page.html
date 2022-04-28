@@ -27,14 +27,24 @@
 
     <div class="card-body">
       <div class="user-meta ion-text-center">
-        <h3 class="playername">{{this.userDisplayName}}</h3>
-        <h3 class="playername" *ngIf="this.userDisplayName === null">{{this.userEmail}}</h3>
-        <h5 class="country" *ngIf="this.userDisplayName !== null">{{this.userEmail}}</h5>
-        <h6 class="ranking">Joined: {{this.userCreatedAt | date:'MMM d, y'}}</h6>
+        <h3 class="userName">{{this.userDisplayName}}</h3>
+        <h3 class="userName" *ngIf="this.userDisplayName === null"> {{this.userEmail}}</h3>
+        <ion-row>
+          <h5 class="userEmail" *ngIf="this.userDisplayName !== null" style="padding-top: 5px; font-size: 1.2em;"> <span
+              style="color: orange"> ✉</span>
+            {{this.userEmail}}</h5>
+        </ion-row>
+        <ion-row>
+          <h6 class="userJoined" style="font-size: 1em;">
+            <span style="color: orange"> 📆</span> Joined: {{this.userCreatedAt |
+            date:'MMM d, y'}}
+          </h6>
+        </ion-row>
       </div>
 
       <div class="editButton">
-        <ion-button shape="round" expand="block" color="warning" (click)="changePhoto()">Change photo<ion-icon name="camera-outline">
+        <ion-button shape="round" expand="block" color="warning" (click)="changePhoto()">Change photo &nbsp; <ion-icon
+            name="camera-outline">
           </ion-icon>
         </ion-button>
       </div>

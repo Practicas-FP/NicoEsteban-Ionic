@@ -36,6 +36,8 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
+
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -64,6 +66,16 @@ export class ProfilePage implements OnInit {
     })
   }
   //!OnInit
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Loading Profile...',
+      duration: 500
+    });
+    return await loading.present();
+    //const { role, data } = await loading.onDidDismiss();
+  }
 
   changePhoto() {
     this.photoService.addNewToGallery();

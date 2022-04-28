@@ -1,9 +1,27 @@
-.appLogo {
-  color: rgb(240, 40, 40);
+.menuHeader {
+  margin-bottom: 10px;
+  font-size: 1.8em;
+font-family: inherit;
+
 }
 
 .movieLogo {
-  color: #224C57
+  color: white;
+}
+
+.appLogo {
+  color: orange;
+  font-weight: bolder;
+}
+
+.menuLabel {
+  color: orange;
+  font-weight: bold;
+}
+
+
+.listSession{
+  align-items: baseline;
 }
 
 
@@ -68,7 +86,7 @@ ion-menu.md ion-item.selected ion-icon {
 }
 
 ion-menu.md ion-item ion-icon {
-  color: #616e7e;
+  color: orange;
 }
 
 ion-menu.md ion-item ion-label {
@@ -100,7 +118,7 @@ ion-menu.ios ion-item.selected ion-icon {
 
 ion-menu.ios ion-item ion-icon {
   font-size: 24px;
-  color: #73849a;
+  color: orange;
 }
 
 ion-menu.ios ion-list#labels-list ion-list-header {
@@ -126,4 +144,5 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-mycolor);
+  color: blue;
 }

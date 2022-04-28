@@ -3,15 +3,16 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-
         <!--Home-->
         <ion-list>
-          <ion-list-header style="margin-bottom:30px">
-            <span class="movieLogo">MOVIES</span><span class="appLogo">APP</span>
+          <ion-list-header class="menuHeader">
+            <span class="movieLogo">Movies</span><span class="appLogo">APP</span>
           </ion-list-header>
+          
+        <ion-item-divider style="background-color:orange"> </ion-item-divider>
           <ion-menu-toggle autoHide="false">
-            <ion-item [routerLink]="['/']">
-              <ion-icon slot="start" name="home-outline"></ion-icon>
+            <ion-item [routerLink]="['/']" style="margin-top: 30px">
+              <ion-icon class="icon" slot="start" name="home-outline"></ion-icon>
               <ion-label>
                 Home
               </ion-label>
@@ -22,7 +23,7 @@
         <!--Categories-->
         <ion-list style="padding-top: 0px">
           <ion-list-header>
-            <ion-label>Categories</ion-label>
+            <ion-label class="menuLabel">Categories</ion-label>
           </ion-list-header>
           <ion-menu-toggle autoHide="false">
             <ion-item [routerLink]="['/upcoming-movies']">
@@ -49,7 +50,7 @@
         <!--Profile-->
         <ion-list style="padding-top: 0px" *ngIf="userIsLoggued === true">
           <ion-list-header>
-            <ion-label>Profile</ion-label>
+            <ion-label class="menuLabel">Profile</ion-label>
           </ion-list-header>
           <ion-menu-toggle autoHide="false">
             <ion-item [routerLink]="['/profile']">
@@ -67,10 +68,11 @@
           </ion-menu-toggle>
         </ion-list>
         
+     
 
         <!--Session-->
-        <ion-list style="padding-top: 40px">
-          <ion-menu-toggle autoHide="false">
+        <ion-list class="listSession" style="padding-top: 40px">
+          <ion-menu-toggle class="menuToggle" autoHide="false">
             <ion-item [routerLink]="['/log-in']" *ngIf="userIsLoggued === false">
               <ion-icon slot="start" name="log-in-outline"></ion-icon>
               <ion-label>

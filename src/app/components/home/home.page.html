@@ -5,21 +5,20 @@
   <ion-toolbar color="mycolor">
     <ion-searchbar placeholder="Search for a movie title..." animated (ionChange)="searchMovie($event)" class="searchBar"></ion-searchbar>
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content class="ionContent">
 
   <div class="homeSubtitle">
     <ion-row [hidden]="hideResultsFor" class="resultsFor">
-      <div>
-        Results for: "{{this.movieSearched}}"
+      <div class="cardTitle2">
+        》Results for: "{{this.movieSearched}}"
       </div>
     </ion-row>
   
     <ion-row [hidden]="hideTitle" class="recommended">
-      <div>
-        Recommended for you:
+      <div class="cardTitle2">
+        》Recommended for you:
       </div>
     </ion-row>
   </div>
@@ -47,14 +46,14 @@
                 <ion-card-title class="cardTitle">{{movie.title}}</ion-card-title>
                 <div class="cardSubTitle">
                   <ion-card-subtitle>Released: {{movie.release_date | date:'MMM d, y'}}</ion-card-subtitle>
-                  <ion-card-subtitle>Votes: {{movie.vote_count}}</ion-card-subtitle>
+                  <ion-card-subtitle>Ratings: {{movie.vote_count}}</ion-card-subtitle>
 
                 </div>
                 <ion-row class="cardRankVotes">
                   <ion-col class="ion-text-end">
-                    <span class="rankNumber">{{movie.vote_average}}</span>/10
-                    <!--{{movie.vote_count}} <ion-icon name="people" class="iconPeople"></ion-icon>-->
-
+                    <ion-chip>
+                      <ion-label color="warning"><span class="rankNumber">{{movie.vote_average}}</span>/10</ion-label>
+                    </ion-chip>
                   </ion-col>
                 </ion-row>
               </div>
