@@ -1,55 +1,52 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>sign-in</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="mycolor" class="pageTitle">
+        <ion-title>Sign In</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <div class="container ">
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <ion-item class="ion-text-center">
+                <ion-label class="title">Create you account</ion-label>
+            </ion-item>
 
-    <div align="center" style="margin-top: 20px;">
+            <ion-item>
+                <ion-label position="floating" class="label">Email</ion-label>
+                <ion-input type="text" required type="email" id="exampleInputEmail1" formControlName="user_email">
+                </ion-input>
+            </ion-item>
 
-        <div style="max-width:500px" class="p-3">
-            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-                <fieldset>
-                    <legend>Create your account</legend>
-    
-                    <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="example@mail.com" formControlName="user_email">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="At least 6 characters" formControlName="user_password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword2" class="form-label mt-4">Confirm Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword2"
-                            placeholder="Confirm your password" formControlName="user_password_confirmation">
-                    </div>
-                </fieldset>
-                <button type="submit" class="btn btn-success" style="margin-top: 25px">Create acount</button>
-    
-                <div *ngIf="success === true" class="alert alert-dismissible alert-success" style="margin-top: 15px">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <strong>{{success_message}}</strong>
-                  </div>
-    
-                <div *ngIf="error === true" class="alert alert-dismissible alert-danger" style="margin-top: 15px">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <strong>{{error_message}}</strong>
-                </div>
-    
-                
-            </form>
-        </div>
+            <ion-item>
+                <ion-label position="floating" class="label">Password</ion-label>
+                <ion-input type="text" type="password" id="exampleInputPassword1" required
+                    formControlName="user_password"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating" class="label">Confirm Password</ion-label>
+                <ion-input type="text" required type="password" id="exampleInputPassword2"
+                    formControlName="user_password_confirmation"></ion-input>
+            </ion-item>
+
+            <!--Buttons-->
+            <ion-button shape="round" class="ion-margin-top" type="submit" expand="block" color="warning">
+                Create Account
+            </ion-button>
+
+            <ion-item class="ion-text-center orLabel">
+                <ion-label>Or</ion-label>
+            </ion-item>
+
+            <ion-button shape="round" expand="block" style="color: white" (click)="onLoginGoogle()">LOGIN WITH GOOGLE
+            </ion-button>
+
+            <!--Messages-->
+            <div style="margin-top: 20px; padding: 20px;">
+                <ion-label *ngIf="success === true" class="ion-text-center">{{success_message}}</ion-label>
+                <ion-label *ngIf="error === true" class="ion-text-center">{{error_message}}</ion-label>
+            </div>
+        </form>
+
     </div>
-    
-    
-    
-
-
-
-
 </ion-content>

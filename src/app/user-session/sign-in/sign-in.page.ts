@@ -3,10 +3,16 @@ import { Router } from '@angular/router';
 
 import { FormGroup, FormControl } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+//Adding Google login
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 import { environment } from 'src/environments/environment';
 
 const app = initializeApp(environment.firebaseConfig);
+
+//Adding Google login
+const provider = new GoogleAuthProvider();
 
 @Component({
   selector: 'app-sign-in',
@@ -47,7 +53,7 @@ export class SignInPage implements OnInit {
 
     if (!user_email.match(regex)) {
       this.error = true;
-      this.error_message = "Introduce un correo electrónico es válido."
+      this.error_message = "Introduce un correo electrónico válido."
       /*
       setTimeout(() => {
         window.location.reload();
@@ -57,7 +63,7 @@ export class SignInPage implements OnInit {
 
     if (user_password.length < 6) {
       this.error = true;
-      this.error_message = "La contraseña debe tener 6 caracteres o más."
+      this.error_message = "La contraseña debe tener al menos 6 caracteres."
     }
 
     if (user_password != user_password_confirmation) {
@@ -99,4 +105,27 @@ export class SignInPage implements OnInit {
     }
   }
   // onRegister
+
+  onLoginGoogle(){
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // Redirect to Home
+        this.router.navigate(["/"]);
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
 }

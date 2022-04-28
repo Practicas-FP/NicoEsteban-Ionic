@@ -80,3 +80,19 @@ ion-chip {
 .iconPeople {
     color: rgb(201, 201, 201);
 }
+
+
+
+.my-pagination ::ng-deep .ngx-pagination {
+    background: orange;
+
+}
+
+.my-pagination ::ng-deep .ngx-pagination .current{
+    background: black;
+}
+
+
+.pagination-next{
+    color: black;
+}

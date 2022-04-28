@@ -4,7 +4,6 @@ import { ServiceService } from 'src/app/services/service.service';
 import { LoadingController } from '@ionic/angular';
 
 
-
 @Component({
   selector: 'app-upcoming-movies',
   templateUrl: './upcoming-movies.page.html',
@@ -13,7 +12,10 @@ import { LoadingController } from '@ionic/angular';
 export class UpcomingMoviesPage implements OnInit {
 
   listOfMovies!: Observable<any>;
+  //Pagination
+  p: number = 1;
 
+  
   constructor(
     private movieSvc: ServiceService,
     public loadingController: LoadingController

@@ -1,45 +1,45 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Log In</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="mycolor" class="pageTitle">
+        <ion-title>Log In</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <div align="center" style="margin-top: 20px;">
-
-    <div style="max-width:500px" class="p-3">
+    <div class="container ">
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-            <fieldset >
-                <!--<legend >Login</legend>-->
+            <ion-item class="ion-text-center">
+                <ion-label class="title">Log In</ion-label>
+            </ion-item>
 
-                <div class="form-group">
-                    <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Your Email address here" formControlName="user_email">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1"
-                        placeholder="Your password here" formControlName="user_password">
-                </div>
-            </fieldset>
-            <ion-button type="submit" shape="round" expand="block" color="warning" style="margin-top: 25px">LOGIN</ion-button>
+            <ion-item>
+                <ion-label position="floating" class="label">Email</ion-label>
+                <ion-input type="text" required type="email" id="exampleInputEmail1" formControlName="user_email">
+                </ion-input>
+            </ion-item>
 
-            <ion-button shape="round" expand="block" style="color: white; margin-top: 25px" (click)="onLoginGoogle()">LOGIN WITH GOOGLE</ion-button>
-    
+            <ion-item>
+                <ion-label position="floating" class="label">Password</ion-label>
+                <ion-input type="text" type="password" id="exampleInputPassword1" required
+                    formControlName="user_password"></ion-input>
+            </ion-item>
 
+            <!--Buttons-->
+            <ion-button shape="round" class="ion-margin-top" type="submit" expand="block" color="warning">
+                LOGIN
+            </ion-button>
 
-            <div *ngIf="error === true" class="alert alert-dismissible alert-danger" style="margin-top: 15px">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>{{error_message}}</strong>
+            <ion-item class="ion-text-center orLabel">
+                <ion-label>Or</ion-label>
+            </ion-item>
+
+            <ion-button shape="round" expand="block" style="color: white" (click)="onLoginGoogle()">LOGIN WITH GOOGLE
+            </ion-button>
+
+            <!--Messages-->
+            <div style="margin-top: 20px; padding: 20px;">
+                <ion-label *ngIf="error === true" class="ion-text-center">{{error_message}}</ion-label>
             </div>
         </form>
-        
+
     </div>
-</div>
-
-
-
-
 </ion-content>

@@ -41,8 +41,6 @@ export class LogInPage implements OnInit {
   }
 
   onLogin() {
-    this.presentLoading();
-
 
     const user_email = this.loginForm.controls["user_email"].value;
     const user_password = this.loginForm.controls["user_password"].value;
@@ -78,6 +76,7 @@ export class LogInPage implements OnInit {
               const uid = user.uid;
             }
           })
+          this.presentLoading();
           this.router.navigate(["/"]);
         })
         .catch((error) => {
