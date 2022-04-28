@@ -14,6 +14,7 @@ El proyecto consiste en una aplicación móvil de películas en la cual el usuar
 
 ## Screenshots:
 
-![peliculas_populares](https://user-images.githubusercontent.com/43449804/164043603-d75822db-4d14-40e0-874d-6385b72b6b8a.png)
+![Captura de pantalla 2022-04-28 160925](https://user-images.githubusercontent.com/43449804/165773909-14f5b988-7564-4c12-8fb1-d1e389306be1.png)
 
-![peliculas_favoritas](https://user-images.githubusercontent.com/43449804/164043731-c109e30d-acbe-4241-8478-6c0037e37671.png)
+![Captura de pantalla 2022-04-28 161010](https://user-images.githubusercontent.com/43449804/165773846-db705a4d-4f68-4b7f-9fa5-391adc656d18.png)
+
